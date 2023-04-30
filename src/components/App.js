@@ -186,7 +186,7 @@ class App extends Component {
       cardArray: [],
       cardsChosen: [],
       cardsChosenId: [],
-      time: 60,
+      time: 16,
       timerId: null,
       cardsWon: []
     }
@@ -215,7 +215,7 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-              <div className="timer">Time: {this.state.time}</div>
+              <h1 className="timer">Time: {this.state.time}</h1>
 
                 <div className="grid mb-4" >
 
