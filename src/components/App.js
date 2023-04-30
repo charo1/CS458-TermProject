@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Web3 from 'web3'
 import './App.css';
-import './Timer';
 import MemoryToken from '../abis/MemoryToken.json'
 import brain from '../brain.png'
+// import { startTimer } from './timer';
+
+
 
 const CARD_ARRAY = [
   {
@@ -163,6 +165,8 @@ class App extends Component {
     }
   } 
 
+ 
+
   constructor(props) {
     super(props)
     this.state = {
@@ -173,6 +177,7 @@ class App extends Component {
       cardArray: [],
       cardsChosen: [],
       cardsChosenId: [],
+      timer: "00:00",
       cardsWon: []
     }
   }
@@ -251,5 +256,7 @@ class App extends Component {
     );
   }
 }
+
+
 
 export default App;

@@ -1,16 +1,15 @@
-async function startTimer(duration, display) {
+export async function startTimer(duration, setTimer) {
     var timer = duration, minutes, seconds;
-    setInterval(function () {
+    while (timer >= 0) {
       minutes = parseInt(timer / 60, 10);
       seconds = parseInt(timer % 60, 10);
   
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
   
-      display.textContent = minutes + ":" + seconds;
+      setTimer(minutes + ":" + seconds);
   
-      if (--timer < 0) {
-        timer = duration;
-      }
-    }, 1000);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      timer--;
+    }
   }
