@@ -3,6 +3,10 @@ import Web3 from 'web3'
 import './App.css';
 import MemoryToken from '../abis/MemoryToken.json'
 import brain from '../brain.png'
+// import { startTimer } from './timer';
+
+
+
 
 const CARD_ARRAY = [
   {
@@ -57,11 +61,19 @@ const CARD_ARRAY = [
 
 class App extends Component {
 
+  startTimer = () => {
+    const timerId = setInterval(() => {
+      this.setState(prevState => ({ time: prevState.time - 1 }));
+    }, 1000);
+  
+    this.setState({ timerId });
+  };
 
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
     this.setState({ cardArray: CARD_ARRAY.sort(() => 0.5 - Math.random()) })
+    this.startTimer();
   }
 
   async loadWeb3() {
@@ -162,6 +174,8 @@ class App extends Component {
     }
   } 
 
+ 
+
   constructor(props) {
     super(props)
     this.state = {
@@ -172,6 +186,8 @@ class App extends Component {
       cardArray: [],
       cardsChosen: [],
       cardsChosenId: [],
+      time: 15,
+      timerId: null,
       cardsWon: []
     }
   }
@@ -199,7 +215,7 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                <h1 className="d-4">Edit this file in App.js!</h1>
+              <h1 className="timer">Time: {this.state.time}</h1>
 
                 <div className="grid mb-4" >
 
@@ -249,6 +265,14 @@ class App extends Component {
       </div>
     );
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.time === 0 && prevState.time !== 0) {
+      clearInterval(this.state.timerId);
+      alert('Time is up!');
+    }
+  }
 }
+
+
 
 export default App;
