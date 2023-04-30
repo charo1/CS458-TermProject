@@ -186,7 +186,7 @@ class App extends Component {
       cardArray: [],
       cardsChosen: [],
       cardsChosenId: [],
-      time: 16,
+      time: 15,
       timerId: null,
       cardsWon: []
     }
