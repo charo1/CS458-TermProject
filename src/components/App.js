@@ -7,6 +7,7 @@ import brain from '../brain.png'
 
 
 
+
 const CARD_ARRAY = [
   {
     name: 'fries',
@@ -60,11 +61,19 @@ const CARD_ARRAY = [
 
 class App extends Component {
 
+  startTimer = () => {
+    const timerId = setInterval(() => {
+      this.setState(prevState => ({ time: prevState.time - 1 }));
+    }, 1000);
+  
+    this.setState({ timerId });
+  };
 
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
     this.setState({ cardArray: CARD_ARRAY.sort(() => 0.5 - Math.random()) })
+    this.startTimer();
   }
 
   async loadWeb3() {
@@ -177,7 +186,8 @@ class App extends Component {
       cardArray: [],
       cardsChosen: [],
       cardsChosenId: [],
-      timer: "00:00",
+      time: 60,
+      timerId: null,
       cardsWon: []
     }
   }
@@ -205,7 +215,7 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                <h1 className="d-4">Edit this file in App.js!</h1>
+              <div className="timer">Time: {this.state.time}</div>
 
                 <div className="grid mb-4" >
 
@@ -254,6 +264,12 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.time === 0 && prevState.time !== 0) {
+      clearInterval(this.state.timerId);
+      alert('Time is up!');
+    }
   }
 }
 
